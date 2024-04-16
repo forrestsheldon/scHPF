@@ -26,17 +26,17 @@ BLIST = str( Path(__file__).parent /  Path('_data/sample_blacklist.txt') )
 
 @pytest.fixture()
 def protein_coding():
-    return pd.read_csv(PROTEIN_CODING, delim_whitespace=True, header=None)
+    return pd.read_csv(PROTEIN_CODING, sep=r'\s+', header=None)
 
 
 @pytest.fixture()
 def blacklist():
-    return pd.read_csv(BLIST, delim_whitespace=True, header=None)
+    return pd.read_csv(BLIST, sep=r'\s+', header=None)
 
 
 @pytest.fixture()
 def exp_genes():
-    return pd.read_csv(TXT, delim_whitespace=True, header=None)[[0,1]]
+    return pd.read_csv(TXT, sep=r'\s+', header=None)[[0,1]]
 
 
 @pytest.mark.parametrize('ngene_cols', [2,3])

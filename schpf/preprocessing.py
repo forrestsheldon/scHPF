@@ -95,7 +95,7 @@ def load_txt(filename,  ngene_cols=2, verbose=True):
         print(msg)
 
         df = pd.read_csv(filename, header=None, memory_map=True,
-                delim_whitespace=True)
+                sep=r'\s+')
 
         genes = df[gene_cols]
         dense = df.drop(columns=gene_cols).values.T
@@ -399,11 +399,11 @@ def load_and_filter(infile, min_cells, whitelist='', blacklist='',
         raise ValueError('min_cells must be >= 0')
     mask = min_cells_expressing_mask(umis, min_cells)
     if whitelist is not None and len(whitelist):
-        whitelist = pd.read_csv(whitelist, delim_whitespace=True, header=None)
+        whitelist = pd.read_csv(whitelist, sep=r'\s+', header=None)
         mask &= genelist_mask(candidate_names, whitelist[genelist_col],
                               split_on_dot = ~no_split_on_dot)
     if blacklist is not None and len(blacklist):
-        blacklist = pd.read_csv(blacklist, delim_whitespace=True, header=None)
+        blacklist = pd.read_csv(blacklist, sep=r'\s+', header=None)
         mask &= genelist_mask(candidate_names, blacklist[genelist_col],
                               whitelist=False, split_on_dot = ~no_split_on_dot)
 
@@ -472,7 +472,7 @@ def load_like(infile, reference, by_gene_name=False,
     ncells, ngenes = umis.shape
 
     # load the reference order
-    ref = pd.read_csv(reference, delim_whitespace=True, header=None
+    ref = pd.read_csv(reference, sep=r'\s+', header=None
             )[genelist_col]
     # select input column and process names unless told not to
     if no_split_on_dot:
